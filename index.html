@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<style>
+
+	</style>
+
+	<title>The Great Lottery!</title>
+
+
+	<script language="JavaScript">
+		var key_count = 5;
+		var winning_nums = new Array();
+		var user_nums = new Array();
+		var winning_lucky;
+		var user_lucky;
+
+		
+
+		function setup() {
+			document.write("Winning Numbers: <br>")
+			winning_lucky = parseInt(Math.random() * 17 + 1, 10);
+			for(var i = 0; i < key_count; ++i) {
+				winning_nums[i] = parseInt(Math.random() * 47 + 1, 10);
+				document.write(winning_nums[i] + " ");
+			}
+			document.write("<br> Lucky Number: <br>" + winning_lucky + "<br>");
+		}
+
+		setup();
+
+		function sort() {
+			//taken from StackOverflow by user Tom
+			numberSort = function(a,b) {
+				return a-b;
+			};
+			var sorted_nums = winning_nums.sort(numberSort);
+			document.write("Winning Numbers (sorted): <br>");
+			for(var i = 0; i < key_count; ++i) 
+				document.write(winning_nums[i] + " ");
+			document.write("<br>");
+		}
+
+		sort();
+
+		function extractData() {
+			var number_string = document.getElementById('normal').value;
+			//Found this on stackoverflow as well!
+			user_nums = number_string.split(" ").map(Number);
+			console.log("User_nums: " + user_nums);
+
+			var temp_lucky = document.getElementById('lucky').value;
+			user_lucky = parseInt(temp_lucky, 10);
+			console.log("User lucky: " + user_lucky);
+			count_matches();
+		}
+
+
+		function count_matches() {
+			var matches = 0;
+			console.log("Initial matches: " + matches);
+			for(var i = 0; i < key_count; i++)
+			{
+				for(var j = 0; j < key_count; j++)
+				{
+					if(winning_nums[i] == user_nums[j])
+					{
+						matches++;
+					}
+				}
+			}
+			
+			console.log(user_nums);
+			console.log(user_lucky);
+
+			console.log(matches);
+
+			if(user_lucky == winning_lucky) {
+				matches += 6;
+			}
+			console.log("Final num of matches: " + matches);
+			check_win(matches);
+		}
+
+		function check_win(matches) {
+			switch(matches) {
+				case 0:
+					alert("Prize = $0");
+					break;
+				case 1:
+					alert("Prize = $0");
+					break;
+				case 2:
+					alert("Prize = $3");
+					break;
+				case 3:
+					alert("Prize = $20");
+					break;
+				case 4:
+					alert("Prize = $200");
+					break;
+				case 5:
+					alert("Prize = $25,000 a YEAR for LIFE!");
+					break;
+				case 6:
+					alert("Prize = $4");
+					break;
+				case 7:
+					alert("Prize = $6");
+					break;
+				case 8:
+					alert("Prize = $25");
+					break;
+				case 9:
+					alert("Prize = $150");
+					break;
+				case 10:
+					alert("Prize = $5000");
+					break;
+				case 11:
+					alert("Prize = $7,000 a WEEK for LIFE!");
+					break;
+				default:
+					alert("Prize unknown!");
+					break;
+			}
+		}
+
+
+
+
+
+
+	</script>
+
+</head>
+
+<body>
+<form>
+	<label>Input your numbers with one space in between each: </label>
+	<input type="text" id="normal">
+	<label>Input your Lucky Number!</label>
+	<input type="text" id="lucky">
+
+	<input type="button" value="Input!" name="submit" onclick="extractData()">
+
+</form>
+</body>
+</html>
